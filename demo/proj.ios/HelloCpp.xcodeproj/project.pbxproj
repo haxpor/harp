@@ -90,6 +90,7 @@
 		1E4ACC371BE73219008BCAE9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B31547F06B00633F88 /* AudioToolbox.framework */; };
 		1E4ACC381BE73231008BCAE9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B11547F06B00633F88 /* OpenAL.framework */; };
 		1E4ACC3A1BE73248008BCAE9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E4ACC391BE73247008BCAE9 /* StoreKit.framework */; };
+		1E4ACC401BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACC3F1BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -308,6 +309,8 @@
 		1E4ACBF51BE72E95008BCAE9 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
 		1E4ACBF61BE72E95008BCAE9 /* HttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpResponse.h; sourceTree = "<group>"; };
 		1E4ACC391BE73247008BCAE9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		1E4ACC3F1BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDeviceLocaleIOS.mm; sourceTree = "<group>"; };
+		1E4ACC411BE73CAC008BCAE9 /* CCDeviceLocale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeviceLocale.h; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -560,6 +563,7 @@
 		1E4ACB7C1BE72E95008BCAE9 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1E4ACC3B1BE738FA008BCAE9 /* DeviceLocale */,
 				1E4ACB7D1BE72E95008BCAE9 /* Additional */,
 				1E4ACB801BE72E95008BCAE9 /* CCBReader */,
 				1E4ACBB51BE72E95008BCAE9 /* CCRadioMenu */,
@@ -729,6 +733,15 @@
 			path = network;
 			sourceTree = "<group>";
 		};
+		1E4ACC3B1BE738FA008BCAE9 /* DeviceLocale */ = {
+			isa = PBXGroup;
+			children = (
+				1E4ACC3F1BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm */,
+				1E4ACC411BE73CAC008BCAE9 /* CCDeviceLocale.h */,
+			);
+			path = DeviceLocale;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -895,6 +908,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E4ACC201BE72E95008BCAE9 /* CCControlSlider.cpp in Sources */,
+				1E4ACC401BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm in Sources */,
 				1E4ACC151BE72E95008BCAE9 /* CCParticleSystemQuadLoader.cpp in Sources */,
 				1E4ACC1B1BE72E95008BCAE9 /* CCControlButton.cpp in Sources */,
 				1E4ACC141BE72E95008BCAE9 /* CCNodeLoaderLibrary.cpp in Sources */,
@@ -1021,12 +1035,13 @@
 				);
 				INFOPLIST_FILE = "HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv6 armv7s armv7";
+				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Debug;
 		};
@@ -1062,13 +1077,14 @@
 				);
 				INFOPLIST_FILE = "HelloCpp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv6 armv7s armv7";
+				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Release;
 		};
