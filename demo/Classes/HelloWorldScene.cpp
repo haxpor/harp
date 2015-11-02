@@ -1,6 +1,9 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
+#include "CCDeviceLocale.h"
+
 USING_NS_CC;
+USING_NS_CC_EXT;
 
 
 CCScene* HelloWorld::scene()
@@ -73,6 +76,10 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
+    
+    // test device's locale
+    CCLOG("Device language (raw): %s", ccdeviceLocale_getLanguage());
+    CCLOG("Device language (code): %d", ccdeviceLocale_getLanguageK());
     
     return true;
 }
