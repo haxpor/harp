@@ -14,6 +14,8 @@ public:
     
     // a selector callback
     void menuCloseCallback(CCObject* pSender);
+    void openFacebookURL(CCObject* pSender);
+    void openTwitterURL(CCObject* pSender);
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);

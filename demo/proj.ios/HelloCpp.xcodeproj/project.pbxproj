@@ -12,6 +12,7 @@
 		1A1CF36A1626CEFF00AFC938 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1A1CF3681626CEFF00AFC938 /* ipadhd */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		1E1395051BE86D7D006728E8 /* CCURLOpenerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E1395041BE86D7D006728E8 /* CCURLOpenerIOS.mm */; };
 		1E4ACA881BE7296A008BCAE9 /* HelperAIFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACA451BE7296A008BCAE9 /* HelperAIFunctions.cpp */; };
 		1E4ACA891BE7296A008BCAE9 /* SteeringBehavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACA491BE7296A008BCAE9 /* SteeringBehavior.cpp */; };
 		1E4ACA8A1BE7296A008BCAE9 /* Wall2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACA4B1BE7296A008BCAE9 /* Wall2D.cpp */; };
@@ -135,6 +136,8 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1E1395001BE8688D006728E8 /* CCURLOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCURLOpener.h; sourceTree = "<group>"; };
+		1E1395041BE86D7D006728E8 /* CCURLOpenerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCURLOpenerIOS.mm; sourceTree = "<group>"; };
 		1E4ACA3D1BE728E9008BCAE9 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		1E4ACA451BE7296A008BCAE9 /* HelperAIFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelperAIFunctions.cpp; sourceTree = "<group>"; };
 		1E4ACA461BE7296A008BCAE9 /* HelperAIFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperAIFunctions.h; sourceTree = "<group>"; };
@@ -368,6 +371,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1E1394FE1BE86840006728E8 /* URLOpener */ = {
+			isa = PBXGroup;
+			children = (
+				1E1395001BE8688D006728E8 /* CCURLOpener.h */,
+				1E1395041BE86D7D006728E8 /* CCURLOpenerIOS.mm */,
+			);
+			path = URLOpener;
+			sourceTree = "<group>";
+		};
 		1E4ACA3E1BE728E9008BCAE9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -563,6 +575,7 @@
 		1E4ACB7C1BE72E95008BCAE9 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1E1394FE1BE86840006728E8 /* URLOpener */,
 				1E4ACC3B1BE738FA008BCAE9 /* DeviceLocale */,
 				1E4ACB7D1BE72E95008BCAE9 /* Additional */,
 				1E4ACB801BE72E95008BCAE9 /* CCBReader */,
@@ -929,6 +942,7 @@
 				1E4ACC171BE72E95008BCAE9 /* CCScrollViewLoader.cpp in Sources */,
 				1E4ACA931BE7296A008BCAE9 /* RunningLabelTTF.cpp in Sources */,
 				1E4ACC1C1BE72E95008BCAE9 /* CCControlColourPicker.cpp in Sources */,
+				1E1395051BE86D7D006728E8 /* CCURLOpenerIOS.mm in Sources */,
 				1E4ACC131BE72E95008BCAE9 /* CCNodeLoader.cpp in Sources */,
 				1E4ACC321BE72E95008BCAE9 /* CCTableViewCell.cpp in Sources */,
 				BF365AA812A103F70050DCF4 /* AppController.mm in Sources */,

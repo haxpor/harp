@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 #include "CCDeviceLocale.h"
+#include "CCURLOpener.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -47,9 +48,19 @@ bool HelloWorld::init()
     
 	pCloseItem->setPosition(ccp(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
                                 origin.y + pCloseItem->getContentSize().height/2));
+    
+    // add a facebook button
+    CCMenuItemFont *fbItem = CCMenuItemFont::create("Facebook", this, menu_selector(HelloWorld::openFacebookURL));
+    fbItem->setPosition(ccp(origin.x + visibleSize.width/1.5 - fbItem->getContentSize().width/2,
+                            origin.y + visibleSize.height/2 - fbItem->getContentSize().height/2));
+    
+    // add a twitter button
+    CCMenuItemFont *twitterItem = CCMenuItemFont::create("Twitter", this, menu_selector(HelloWorld::openTwitterURL));
+    twitterItem->setPosition(ccp(origin.x + visibleSize.width/2.5 - twitterItem->getContentSize().width/2,
+                            origin.y + visibleSize.height/2 - twitterItem->getContentSize().height/2));
 
     // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
+    CCMenu* pMenu = CCMenu::create(pCloseItem, fbItem, twitterItem, NULL);
     pMenu->setPosition(CCPointZero);
     this->addChild(pMenu, 1);
 
@@ -84,6 +95,29 @@ bool HelloWorld::init()
     return true;
 }
 
+void HelloWorld::openFacebookURL(cocos2d::CCObject *pSender)
+{
+    CCURLOpener *urlOpener = CCURLOpener::create();
+    
+    // try to open app-link of facebook
+    if(!urlOpener->openURL("fb://profile/374701732647919"))
+    {
+        // open it with browser
+        urlOpener->openURL("https://www.facebook.com/secretcharsg");
+    }
+}
+
+void HelloWorld::openTwitterURL(cocos2d::CCObject *pSender)
+{
+    CCURLOpener *urlOpener = CCURLOpener::create();
+    
+    // try to open app-link of facebook
+    if(!urlOpener->openURL("twitter://user?screen_name=secretcharsg"))
+    {
+        // open it with browser
+        urlOpener->openURL("https://twitter.com/secretcharsg");
+    }
+}
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
