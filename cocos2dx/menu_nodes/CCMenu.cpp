@@ -244,6 +244,17 @@ bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
     {
         m_eState = kCCMenuStateTrackingTouch;
         m_pSelectedItem->selected();
+        
+        if(m_isActivatedByPressEvent)
+            m_pSelectedItem->activate();
+        
+        // track holding (if enabled)
+        if(m_pSelectedItem->isHoldingEnabled())
+        {
+            m_pSelectedItem->setHolding(true);
+            m_pSelectedItem->resetTimePassedSincePreviousHolding();
+        }
+        
         return true;
     }
     return false;
@@ -256,8 +267,15 @@ void CCMenu::ccTouchEnded(CCTouch *touch, CCEvent* event)
     CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");
     if (m_pSelectedItem)
     {
+        // stop tracking holding-event (if enabled)
+        if(m_pSelectedItem->isHoldingEnabled())
+            // reset holding flag, but left time passed intact to allow others to use its information
+            m_pSelectedItem->setHolding(false);
+        
         m_pSelectedItem->unselected();
-        m_pSelectedItem->activate();
+        
+        if(!m_isActivatedByPressEvent)
+            m_pSelectedItem->activate();
     }
     m_eState = kCCMenuStateWaiting;
 }
@@ -269,6 +287,13 @@ void CCMenu::ccTouchCancelled(CCTouch *touch, CCEvent* event)
     CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchCancelled] -- invalid state");
     if (m_pSelectedItem)
     {
+        // cancel holding (if enabled)
+        if(m_pSelectedItem->isHoldingEnabled())
+        {
+            m_pSelectedItem->setHolding(false);
+            m_pSelectedItem->resetTimePassedSincePreviousHolding();
+        }
+        
         m_pSelectedItem->unselected();
     }
     m_eState = kCCMenuStateWaiting;
@@ -283,6 +308,10 @@ void CCMenu::ccTouchMoved(CCTouch* touch, CCEvent* event)
     {
         if (m_pSelectedItem)
         {
+            // reset holding (if enabled)
+            if(m_pSelectedItem->isHoldingEnabled())
+                m_pSelectedItem->setHolding(false);
+            
             m_pSelectedItem->unselected();
         }
         m_pSelectedItem = currentItem;

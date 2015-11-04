@@ -62,7 +62,7 @@ public:
     /**
      *  @js ctor
      */
-    CCMenu() : m_pSelectedItem(NULL) {}
+    CCMenu() : m_pSelectedItem(NULL), m_isActivatedByPressEvent(false) {}
     /**
      *  @js NA
      *  @lua NA
