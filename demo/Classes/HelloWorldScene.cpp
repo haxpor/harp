@@ -2,10 +2,20 @@
 #include "AppMacros.h"
 #include "CCDeviceLocale.h"
 #include "CCURLOpener.h"
+#include "DummyScene.hpp"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+using namespace harp;
+
+HelloWorld::~HelloWorld()
+{
+    CCLOGINFO("Destroying DummyScene");
+    
+    CC_SAFE_RELEASE_NULL(m_rewardIdLabel);
+    CC_SAFE_RELEASE_NULL(m_rewardValueLabel);
+}
 
 CCScene* HelloWorld::scene()
 {
@@ -22,6 +32,15 @@ CCScene* HelloWorld::scene()
     return scene;
 }
 
+void HelloWorld::handleReward(intptr_t rewardKey, int rewardValue)
+{
+    if(rewardKey == 1)
+    {
+        m_rewardIdLabel->setString("Coin");
+        m_rewardValueLabel->setString(CCString::createWithFormat("%d", rewardValue)->getCString());
+    }
+}
+
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
@@ -34,6 +53,21 @@ bool HelloWorld::init()
     
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    
+    // labels to show value of remote notification we got
+    m_rewardIdLabel = new CCLabelTTF();
+    m_rewardIdLabel->initWithString("", "Arial", 30);
+    m_rewardIdLabel->setPosition(ccp(origin.x + visibleSize.width / 2.5 - m_rewardIdLabel->getContentSize().width/2, 70));
+    
+    m_rewardValueLabel = new CCLabelTTF();
+    m_rewardValueLabel->initWithString("", "Arial", 30);
+    m_rewardValueLabel->setPosition(ccp(origin.x + visibleSize.width / 1.5 - m_rewardIdLabel->getContentSize().width/2, 70));
+    
+    this->addChild(m_rewardIdLabel, 1);
+    this->addChild(m_rewardValueLabel, 1);
+    
+    // flush push reward
+    PushRewardManager::sharedInstance()->flush(this);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -121,12 +155,6 @@ void HelloWorld::openTwitterURL(cocos2d::CCObject *pSender)
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-    CCDirector::sharedDirector()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
+    // go to dummy scene
+    CCDirector::sharedDirector()->replaceScene(DummyScene::scene());
 }

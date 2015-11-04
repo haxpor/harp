@@ -92,6 +92,8 @@
 		1E4ACC381BE73231008BCAE9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B11547F06B00633F88 /* OpenAL.framework */; };
 		1E4ACC3A1BE73248008BCAE9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E4ACC391BE73247008BCAE9 /* StoreKit.framework */; };
 		1E4ACC401BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACC3F1BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm */; };
+		1EE397861BEA96A5006CE03E /* PushRewardManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1EE397851BEA96A5006CE03E /* PushRewardManager.mm */; };
+		1EE3978B1BEACDEA006CE03E /* DummyScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1EE397891BEACDEA006CE03E /* DummyScene.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
@@ -314,6 +316,11 @@
 		1E4ACC391BE73247008BCAE9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1E4ACC3F1BE73C9D008BCAE9 /* CCDeviceLocaleIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDeviceLocaleIOS.mm; sourceTree = "<group>"; };
 		1E4ACC411BE73CAC008BCAE9 /* CCDeviceLocale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeviceLocale.h; sourceTree = "<group>"; };
+		1EE397851BEA96A5006CE03E /* PushRewardManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PushRewardManager.mm; sourceTree = "<group>"; };
+		1EE397871BEA96B5006CE03E /* PushRewardManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushRewardManager.h; sourceTree = "<group>"; };
+		1EE397881BEA9ED7006CE03E /* IPushRewardDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPushRewardDelegate.h; sourceTree = "<group>"; };
+		1EE397891BEACDEA006CE03E /* DummyScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DummyScene.cpp; sourceTree = "<group>"; };
+		1EE3978A1BEACDEA006CE03E /* DummyScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DummyScene.hpp; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -486,6 +493,9 @@
 				1E4ACA6F1BE7296A008BCAE9 /* FileOperation.cpp */,
 				1E4ACA701BE7296A008BCAE9 /* FileOperation.h */,
 				1E4ACA711BE7296A008BCAE9 /* iOS */,
+				1EE397851BEA96A5006CE03E /* PushRewardManager.mm */,
+				1EE397871BEA96B5006CE03E /* PushRewardManager.h */,
+				1EE397881BEA9ED7006CE03E /* IPushRewardDelegate.h */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -814,6 +824,8 @@
 				BF23D4E4143315EB00657E08 /* AppDelegate.h */,
 				BF23D4E5143315EB00657E08 /* HelloWorldScene.cpp */,
 				BF23D4E6143315EB00657E08 /* HelloWorldScene.h */,
+				1EE397891BEACDEA006CE03E /* DummyScene.cpp */,
+				1EE3978A1BEACDEA006CE03E /* DummyScene.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -859,6 +871,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = XGKHW634KL;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HelloCpp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -931,11 +953,13 @@
 				1E4ACC0E1BE72E95008BCAE9 /* CCLayerGradientLoader.cpp in Sources */,
 				1E4ACA941BE7296A008BCAE9 /* ObjectPool.cpp in Sources */,
 				1E4ACA891BE7296A008BCAE9 /* SteeringBehavior.cpp in Sources */,
+				1EE397861BEA96A5006CE03E /* PushRewardManager.mm in Sources */,
 				1E4ACA951BE7296A008BCAE9 /* FileOperation.cpp in Sources */,
 				1E4ACC101BE72E95008BCAE9 /* CCMenuItemImageLoader.cpp in Sources */,
 				1E4ACA901BE7296A008BCAE9 /* MathUtil.cpp in Sources */,
 				1E4ACA8A1BE7296A008BCAE9 /* Wall2D.cpp in Sources */,
 				1E4ACC041BE72E95008BCAE9 /* CCBReader.cpp in Sources */,
+				1EE3978B1BEACDEA006CE03E /* DummyScene.cpp in Sources */,
 				1E4ACC001BE72E95008BCAE9 /* CCJumpByX.cpp in Sources */,
 				1E4ACA8E1BE7296A008BCAE9 /* CharacterEffect.cpp in Sources */,
 				1E4ACC051BE72E95008BCAE9 /* CCBSequence.cpp in Sources */,
@@ -1051,8 +1075,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = io.wasin.harptest;
 				PRODUCT_NAME = HelloCpp;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "049959b4-b7ed-4eb0-b409-1a7a94b1e2b1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7s armv7";
@@ -1093,8 +1118,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = io.wasin.harptest;
 				PRODUCT_NAME = HelloCpp;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "049959b4-b7ed-4eb0-b409-1a7a94b1e2b1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

@@ -28,8 +28,11 @@
 #import "AppDelegate.h"
 
 #import "RootViewController.h"
+#import "PushRewardManager.h"
 
 @implementation AppController
+
+using namespace harp;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -40,6 +43,27 @@ static AppDelegate s_sharedApplication;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
     // Override point for customization after application launch.
+    
+    // Let the device know we want to receive push notification
+    if([[UIApplication sharedApplication] respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+    
+    // check if app launched from push notification, then check it payload and register for reward
+    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(remoteNotif)
+    {
+        NSNumber *rewardId = (NSNumber*)[remoteNotif objectForKey:@"rewardId"];
+        NSNumber *rewardValue = [remoteNotif objectForKey:@"rewardValue"];
+        
+        // register as reward
+        PushRewardManager::sharedInstance()->registerAsReward([rewardId intValue], [rewardValue intValue]);
+    }
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
@@ -114,6 +138,30 @@ static AppDelegate s_sharedApplication;
      */
 }
 
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // we got device token, then we need to trim the brackets, and cut out space
+    NSString *device = [deviceToken description];
+    device = [device stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    device = [device stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    CCLOG("Device token: %s", [device UTF8String]);
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    CCLOG("Failed to get token, error: %s", [[error localizedDescription] UTF8String]);
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler
+{
+    
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler
+{
+    
+}
 
 #pragma mark -
 #pragma mark Memory management
