@@ -54,16 +54,8 @@ static AppDelegate s_sharedApplication;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     }
     
-    // check if app launched from push notification, then check it payload and register for reward
-    NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if(remoteNotif)
-    {
-        NSNumber *rewardId = (NSNumber*)[remoteNotif objectForKey:@"rewardId"];
-        NSNumber *rewardValue = [remoteNotif objectForKey:@"rewardValue"];
-        
-        // register as reward
-        PushRewardManager::sharedInstance()->registerAsReward([rewardId intValue], [rewardValue intValue]);
-    }
+    // handle remote notification
+    [self handleRemoteNotification:launchOptions];
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
@@ -153,14 +145,37 @@ static AppDelegate s_sharedApplication;
     CCLOG("Failed to get token, error: %s", [[error localizedDescription] UTF8String]);
 }
 
--(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    
+    [self handleRemoteNotificationTransitionFromBackground:application userInfo:userInfo];
 }
 
--(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler
+- (void)handleRemoteNotification:(NSDictionary *)userInfo
 {
-    
+    // check if app launched from push notification, then check it payload and register for reward
+    NSDictionary *remoteNotif = [userInfo objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(remoteNotif)
+    {
+        NSNumber *rewardId = (NSNumber*)[remoteNotif objectForKey:@"rewardId"];
+        NSNumber *rewardValue = [remoteNotif objectForKey:@"rewardValue"];
+        
+        // register as reward
+        PushRewardManager::sharedInstance()->registerAsReward([rewardId intValue], [rewardValue intValue]);
+    }
+}
+
+- (void)handleRemoteNotificationTransitionFromBackground:(UIApplication *)application userInfo:(NSDictionary *)userInfo
+{
+    // check if app launched from push notification, then check it payload and register for reward
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateInactive)
+    {
+        NSNumber *rewardId = (NSNumber*)[userInfo objectForKey:@"rewardId"];
+        NSNumber *rewardValue = [userInfo objectForKey:@"rewardValue"];
+        
+        // register as reward
+        PushRewardManager::sharedInstance()->registerAsReward([rewardId intValue], [rewardValue intValue]);
+    }
 }
 
 #pragma mark -
