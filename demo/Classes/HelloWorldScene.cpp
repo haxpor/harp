@@ -32,12 +32,17 @@ CCScene* HelloWorld::scene()
     return scene;
 }
 
-void HelloWorld::handleReward(intptr_t rewardKey, int rewardValue)
+void HelloWorld::handleReward(intptr_t rewardKey, int rewardValue, bool isLastReward)
 {
     if(rewardKey == 1)
     {
         m_rewardIdLabel->setString("Coin");
         m_rewardValueLabel->setString(CCString::createWithFormat("%d", rewardValue)->getCString());
+    }
+    
+    if(isLastReward)
+    {
+        CCLOG("This is a last reward");
     }
 }
 

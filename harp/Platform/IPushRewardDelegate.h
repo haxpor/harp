@@ -19,7 +19,7 @@ public:
     /**
      User handle reward one by one.
      */
-    virtual void handleReward(intptr_t rewardKey, int rewardValue) = 0;
+    virtual void handleReward(intptr_t rewardKey, int rewardValue, bool isLastReward) = 0;
 };
 
 NS_E_HARPENGINE

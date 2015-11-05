@@ -65,7 +65,7 @@ void PushRewardManager::flush(IPushRewardDelegate *delegate)
         {
             intptr_t key = ((CCInteger*)keys->objectAtIndex(i))->getValue();
             int value = ((CCInteger*)m_rewardDict->objectForKey(key))->getValue();
-            delegate->handleReward(key, value);
+            delegate->handleReward(key, value, i == keys->count()-1);
         }
     }
     

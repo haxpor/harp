@@ -20,7 +20,7 @@ public:
     void openTwitterURL(CCObject* pSender);
     
     // handle rewards as registered via PushRewardManager
-    virtual void handleReward(intptr_t rewardKey, int rewardValue);
+    virtual void handleReward(intptr_t rewardKey, int rewardValue, bool isLastReward);
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
