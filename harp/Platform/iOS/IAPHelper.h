@@ -39,6 +39,7 @@ public:
     void buyProduct(SKProduct_opPtr2 product);
     bool productPurchased(const char* productIdentifier);
     void restoreCompletedTransactions();
+    void releaseCompletelyFor(WrapperCppSKProduct* product);
     void releaseCompletelyFor(WrapperCppSKProduct* array[], int size);
     
     void setDelegate(harp::IAPHelperDelegate* delegate);

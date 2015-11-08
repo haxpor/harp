@@ -37,11 +37,11 @@
 		1E4ACA9D1BE7296A008BCAE9 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACA841BE7296A008BCAE9 /* Util.cpp */; };
 		1E4ACA9E1BE7296A008BCAE9 /* WrapperLocalization.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACA871BE7296A008BCAE9 /* WrapperLocalization.mm */; };
 		1E4ACAA11BE72B4C008BCAE9 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E4ACA421BE728EA008BCAE9 /* libcocos2dx.a */; };
-		1E4ACBFB1BE72E95008BCAE9 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB731BE72E95008BCAE9 /* CDAudioManager.m */; };
+		1E4ACBFB1BE72E95008BCAE9 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB731BE72E95008BCAE9 /* CDAudioManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1E4ACBFC1BE72E95008BCAE9 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB761BE72E95008BCAE9 /* CDOpenALSupport.m */; };
-		1E4ACBFD1BE72E95008BCAE9 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB781BE72E95008BCAE9 /* CocosDenshion.m */; };
+		1E4ACBFD1BE72E95008BCAE9 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB781BE72E95008BCAE9 /* CocosDenshion.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1E4ACBFE1BE72E95008BCAE9 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB791BE72E95008BCAE9 /* SimpleAudioEngine.mm */; };
-		1E4ACBFF1BE72E95008BCAE9 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB7B1BE72E95008BCAE9 /* SimpleAudioEngine_objc.m */; };
+		1E4ACBFF1BE72E95008BCAE9 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB7B1BE72E95008BCAE9 /* SimpleAudioEngine_objc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1E4ACC001BE72E95008BCAE9 /* CCJumpByX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB7E1BE72E95008BCAE9 /* CCJumpByX.cpp */; };
 		1E4ACC011BE72E95008BCAE9 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB811BE72E95008BCAE9 /* CCBAnimationManager.cpp */; };
 		1E4ACC021BE72E95008BCAE9 /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACB831BE72E95008BCAE9 /* CCBFileLoader.cpp */; };
@@ -81,7 +81,7 @@
 		1E4ACC241BE72E95008BCAE9 /* CCInvocation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBD21BE72E95008BCAE9 /* CCInvocation.cpp */; };
 		1E4ACC251BE72E95008BCAE9 /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBD41BE72E95008BCAE9 /* CCScale9Sprite.cpp */; };
 		1E4ACC261BE72E95008BCAE9 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBD71BE72E95008BCAE9 /* CCEditBox.cpp */; };
-		1E4ACC281BE72E95008BCAE9 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBDD1BE72E95008BCAE9 /* CCEditBoxImplIOS.mm */; };
+		1E4ACC281BE72E95008BCAE9 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBDD1BE72E95008BCAE9 /* CCEditBoxImplIOS.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1E4ACC2F1BE72E95008BCAE9 /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBEA1BE72E95008BCAE9 /* CCScrollView.cpp */; };
 		1E4ACC301BE72E95008BCAE9 /* CCSorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBEC1BE72E95008BCAE9 /* CCSorting.cpp */; };
 		1E4ACC311BE72E95008BCAE9 /* CCTableView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E4ACBEE1BE72E95008BCAE9 /* CCTableView.cpp */; };
@@ -1045,6 +1045,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1077,7 +1078,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = io.wasin.harptest;
 				PRODUCT_NAME = HelloCpp;
-				PROVISIONING_PROFILE = "049959b4-b7ed-4eb0-b409-1a7a94b1e2b1";
+				PROVISIONING_PROFILE = "aa52278a-de06-4249-ab6d-8d246aa539e4";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7s armv7";
@@ -1091,6 +1092,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1120,7 +1122,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = io.wasin.harptest;
 				PRODUCT_NAME = HelloCpp;
-				PROVISIONING_PROFILE = "049959b4-b7ed-4eb0-b409-1a7a94b1e2b1";
+				PROVISIONING_PROFILE = "aa52278a-de06-4249-ab6d-8d246aa539e4";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

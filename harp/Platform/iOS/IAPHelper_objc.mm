@@ -42,11 +42,9 @@ typedef struct SKProduct_opPtr_
     {
         // store product identifiers
         _productIdentifiers = productIdentifiers;
-        [_productIdentifiers retain];
         
         // check for previously purchased products
         _purchasedProductIdentifiers = [NSMutableSet set];
-        [_purchasedProductIdentifiers retain];
         for (NSString *productIdentifier in _productIdentifiers) {
             BOOL productPurchased = [[NSUserDefaults standardUserDefaults] boolForKey:productIdentifier];
             if(productPurchased){
@@ -65,7 +63,6 @@ typedef struct SKProduct_opPtr_
 
 -(void)requestProducts {
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
-    [_productsRequest retain];
     _productsRequest.delegate = self;
     [_productsRequest start];
 }
@@ -74,7 +71,6 @@ typedef struct SKProduct_opPtr_
 
 -(void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
     CCLOG("Loaded list of products ...");
-    [_productsRequest release];
     _productsRequest = nil;
     
     // also create vector from NSArray
@@ -101,21 +97,23 @@ typedef struct SKProduct_opPtr_
         // save SKProduct
         SKProduct_opPtr tagSKProduct = new SKProduct_opPtr_();
         tagSKProduct->product = skProduct;
-        [skProduct retain];
         // set it as tag inside a wrapper structure
         wrapperSKProduct->tag = (void*)tagSKProduct;
         
         sendInProducts->push_back(wrapperSKProduct);
     }
-
+    
     // call callback function
     if(_delegate != nil)
         _delegate->onRequestProductsCompleted(true, sendInProducts);
+    
+    // delete array here
+    delete sendInProducts;
+    sendInProducts = NULL;
 }
 
 -(void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     CCLOG("Failed to load products");
-    [_productsRequest release];
     _productsRequest = nil;
     
     // call callback function
@@ -124,7 +122,7 @@ typedef struct SKProduct_opPtr_
 }
 
 -(void)buyProduct:(SKProduct_opPtr)product {
-    CCLOG("Buying %@...", product->product.productIdentifier);
+    CCLOG("Buying %s...", [product->product.productIdentifier UTF8String]);
     
     SKPayment *payment = [SKPayment paymentWithProduct:product->product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -175,27 +173,24 @@ typedef struct SKProduct_opPtr_
 }
 
 -(void)failedTransaction:(SKPaymentTransaction *)transaction {
-
-    // check for type of error
-
+    // at last we finish the transaction
+    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    
     // cancelled
     if(transaction.error.code == SKErrorPaymentCancelled)
     {
         CCLOG("Cancelled transaction...");
-
+        
         if(_delegate != nil)
             _delegate->onCancelledTransaction([transaction.payment.productIdentifier UTF8String]);
     }
     else
     {
         CCLOG("Failed transaction ...");
-
+        
         if(_delegate != nil)
             _delegate->onFailedTransaction([transaction.payment.productIdentifier UTF8String]);
     }
-
-    // at last we finish the transaction
-    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
 -(void)provideContentForProductIdentifier:(NSString *)productIdentifier {
@@ -210,7 +205,7 @@ typedef struct SKProduct_opPtr_
 }
 
 +(id)create:(NSSet*)productIdentifiers {
-    return [[[self alloc] initWithProductIdentifiers:productIdentifiers] autorelease];
+    return [[self alloc] initWithProductIdentifiers:productIdentifiers];
 }
 
 -(void)releaseInternalSKProduct:(void*)skProductPtr {
@@ -223,8 +218,6 @@ typedef struct SKProduct_opPtr_
             // release SKProduct
             if(skProductStruct->product != nil)
             {
-                CCLOG("      Retain count %d for [%s]", [skProductStruct->product retainCount], [[skProductStruct->product localizedTitle] UTF8String]);
-                [skProductStruct->product  release];
                 skProductStruct->product = nil;
                 
                 CCLOG("      Released SKProduct->product");
@@ -234,29 +227,6 @@ typedef struct SKProduct_opPtr_
             delete skProductStruct;
             CCLOG("   Released whole SKProduct");
         }
-    }
-}
-
--(void)dealloc {
-    [super dealloc];
-    
-    // manually clear stuff here
-    if(_productsRequest != nil)
-    {
-       [_productsRequest release];
-        _productsRequest = nil;
-    }
-    
-    if(_productIdentifiers != nil)
-    {
-        [_productIdentifiers release];
-        _productIdentifiers = nil;
-    }
-    
-    if(_purchasedProductIdentifiers != nil)
-    {
-        [_purchasedProductIdentifiers release];
-        _purchasedProductIdentifiers = nil;
     }
 }
 

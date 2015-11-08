@@ -13,12 +13,6 @@ using namespace cocos2d;
 
 @implementation CloudDocument_objc
 
-- (void) dealloc
-{
-    [_documentFileName release];
-    [super dealloc];
-}
-
 /**
  Init CloudDocument with URL of file.
  
@@ -33,12 +27,10 @@ using namespace cocos2d;
     if(paramFileName == nil)
     {
         _documentFileName = [NSString stringWithUTF8String:"UserDocument.txt"];
-        [_documentFileName retain];
     }
     else
     {
         _documentFileName = [NSString stringWithString:paramFileName];
-        [_documentFileName retain];
     }
     
     @try
@@ -50,7 +42,7 @@ using namespace cocos2d;
             {
                 CCLOG("Warning: no delegate is given.");
             }
-        
+            
             _delegate = paramDelegate;
             _documentText = @"";
         }
@@ -78,7 +70,7 @@ using namespace cocos2d;
  @return Initialized document
  */
 - (id) initWithFileName:(ICloudDocumentProtocol)paramDelegate
-              fileName:(NSString*)paramFileName
+               fileName:(NSString*)paramFileName
 {
     return [self initWithFileURL:[self urlForFileInDocumentsDirectoryInICloud:paramFileName] delegate:paramDelegate fileName:paramFileName];
 }
@@ -162,7 +154,7 @@ using namespace cocos2d;
         else
         {
             CCLOG("Failed to create the Documents folder in iCloud \
-                  Error = %@", folderCreationError);
+                  Error = %s", [[folderCreationError localizedDescription] UTF8String]);
         }
     }
     else
@@ -194,12 +186,12 @@ using namespace cocos2d;
 
 + (id) create:(NSURL *)paramURL delegate:(ICloudDocumentProtocol)paramDelegate fileName:(NSString *)paramFileName
 {
-    return [[[self alloc] initWithFileURL:paramURL delegate:paramDelegate fileName:paramFileName] autorelease];
+    return [[self alloc] initWithFileURL:paramURL delegate:paramDelegate fileName:paramFileName];
 }
 
 + (id) create:(ICloudDocumentProtocol)paramDelegate fileName:(NSString*)paramFileName
 {
-    return [[[self alloc] initWithFileName:paramDelegate fileName:paramFileName] autorelease];
+    return [[self alloc] initWithFileName:paramDelegate fileName:paramFileName];
 }
 
 // Read the document file on iCloud
@@ -209,7 +201,7 @@ using namespace cocos2d;
         if(success)
         {
             CCLOG("Successfully loaded the document file from iCloud.");
-            CCLOG("Content = %@", _documentText);
+            CCLOG("Content = %s", [_documentText UTF8String]);
             
             // call delegate's callback
             if(dynamic_cast<ICloudDocumentProtocol>(_delegate) != NULL)

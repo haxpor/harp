@@ -30,7 +30,6 @@ IAPHelper::IAPHelper()
 
 IAPHelper::~IAPHelper()
 {
-    [_iapHelperObjc release];
     CCLOG("Destroying IAPHelper...");
 }
 
@@ -47,7 +46,6 @@ bool IAPHelper::initWithProductIdentifiers(std::vector<std::string> productIdent
     
     // call the super init function
     _iapHelperObjc = [IAPHelper_objc create:productIdentifiers_set];
-    [_iapHelperObjc retain];
     
     return true;
 }
@@ -82,6 +80,20 @@ harp::IAPHelperDelegate* IAPHelper::getDelegate()
     return _iapHelperObjc.delegate;
 }
 
+void IAPHelper::releaseCompletelyFor(WrapperCppSKProduct *product)
+{
+    // release SKProduct_optPtr (as tag)
+    if(product->tag != NULL)
+    {
+        // send in for internal system to release
+        [_iapHelperObjc releaseInternalSKProduct:product->tag];
+    }
+    
+    // release wrapper product (also its internal on-heap data)
+    delete product;
+    CCLOG("Released internal WrapperCppSKProduct");
+}
+
 void IAPHelper::releaseCompletelyFor(WrapperCppSKProduct* array[], int size)
 {
     for(int i=0; i<size; i++)
@@ -100,6 +112,7 @@ void IAPHelper::releaseCompletelyFor(WrapperCppSKProduct* array[], int size)
             
             // release wrapper product (also its internal on-heap data)
             delete wrapperSKProduct;
+            array[i] = NULL;
             CCLOG("Released internal WrapperCppSKProduct");
         }
     }

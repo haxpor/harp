@@ -19,14 +19,12 @@ CloudDocument::CloudDocument()
 
 CloudDocument::~CloudDocument()
 {
-    [_cloudDocumentObjc release];
 }
 
 bool CloudDocument::initWithFileURL(std::string url, harp::ICloudDocumentProtocol* delegate, std::string fileName)
 {
     // initialize a managed cloud document
     _cloudDocumentObjc = [CloudDocument_objc create:[NSURL fileURLWithPath:[NSString stringWithUTF8String:url.c_str()]]  delegate:delegate fileName:[NSString stringWithUTF8String:fileName.c_str()]];
-    [_cloudDocumentObjc retain];
     
     return true;
 }
@@ -34,7 +32,6 @@ bool CloudDocument::initWithFileURL(std::string url, harp::ICloudDocumentProtoco
 bool CloudDocument::initWithFileName(harp::ICloudDocumentProtocol *delegate, std::string fileName)
 {
     _cloudDocumentObjc = [CloudDocument_objc create:delegate fileName:[NSString stringWithUTF8String:fileName.c_str()]];
-    [_cloudDocumentObjc retain];
     
     return true;
 }

@@ -187,11 +187,5 @@ static AppDelegate s_sharedApplication;
      */
 }
 
-
-- (void)dealloc {
-    [super dealloc];
-}
-
-
 @end
 
