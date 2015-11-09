@@ -16,7 +16,7 @@ NS_S_HARPENGINE
 #define HarpLocalizedString(key, comment) \
     WrapperLocalization::sharedInstance()->getLocalizedStringForKey(key, comment)
 
-#define LANGUAGE_TOTAL 11
+#define LANGUAGE_TOTAL 12
 enum Language {
     ENGLISH,
     FRENCH,
@@ -28,7 +28,8 @@ enum Language {
     SIMPLIFIED_CHINESE,
     TRADITIONAL_CHINESE,
     RUSSIAN,
-    BRAZILIAN_PORTUGUESE
+    BRAZILIAN_PORTUGUESE,
+    THAI
 };
 
 class WrapperLocalization

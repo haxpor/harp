@@ -58,6 +58,8 @@ const char* WrapperLocalization::getLocalizedStringForKey(const char* keyStr, co
         path = [[NSBundle mainBundle] pathForResource:@"ru" ofType:@"lproj"];
     else if(m_selectedLanguage == BRAZILIAN_PORTUGUESE)
         path = [[NSBundle mainBundle] pathForResource:@"pt-BR" ofType:@"lproj"];
+    else if(m_selectedLanguage == THAI)
+        path = [[NSBundle mainBundle] pathForResource:@"th" ofType:@"lproj"];
     
     else
         // fallback case
@@ -97,6 +99,8 @@ const char* WrapperLocalization::getCurrentLanguageString()
         return "ru";
     else if(m_selectedLanguage == BRAZILIAN_PORTUGUESE)
         return "pt-BR";
+    else if(m_selectedLanguage == THAI)
+        return "th";
     else
         // should not happen, but use this as fall back case
         return "en";

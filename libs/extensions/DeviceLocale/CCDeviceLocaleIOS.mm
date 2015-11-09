@@ -67,6 +67,10 @@ CC_DLL kCCDeviceLanguage ccdeviceLocale_getLanguageK()
         {
             return BRAZILIAN_PORTUGUESE;
         }
+        else if([lang isEqualToString:@"th"])
+        {
+            return THAI;
+        }
         else
         {
             // other cases, return english
@@ -122,6 +126,10 @@ CC_DLL kCCDeviceLanguage ccdeviceLocale_getLanguageK()
             else if([lang rangeOfString:@"ru-"].location != NSNotFound)
             {
                 return RUSSIAN;
+            }
+            else if([lang rangeOfString:@"th-"].location != NSNotFound)
+            {
+                return THAI;
             }
             else
             {
