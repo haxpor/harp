@@ -130,24 +130,26 @@ void CCScene::addLayerWithState(cocos2d::CCLayer* layer, int state, int zOrder, 
 
 void CCScene::removeLayerAndFallbackToState(CCLayer* layer, int fallbackState, cocos2d::CCObject* ptrTargetSelector, SEL_CallFunc enablingCallFunc)
 {
-    // remove a layer from this scene (also clear out the resource)
-    layer->removeFromParentAndCleanup(true);
-    
     // call callback function if need
     if(ptrTargetSelector != NULL && enablingCallFunc != NULL)
         (ptrTargetSelector->*enablingCallFunc)();
+    
+    // remove a layer from this scene (also clear out the resource)
+    layer->removeFromParentAndCleanup(true);
+    
     // set state
     setSceneState(fallbackState);
 }
 
 void CCScene::removeLayerAndFallbackToState(cocos2d::CCLayer* layer, int fallbackState, cocos2d::CCObject* ptrTargetSelector, SEL_CallFuncD enablingCallFuncD, void* data)
 {
-    // remove a layer from this scene (also clear out the resource)
-    layer->removeFromParentAndCleanup(true);
-    
     // call callback function if need
     if(ptrTargetSelector != NULL && enablingCallFuncD != NULL)
         (ptrTargetSelector->*enablingCallFuncD)(data);
+    
+    // remove a layer from this scene (also clear out the resource)
+    layer->removeFromParentAndCleanup(true);
+    
     // set state
     setSceneState(fallbackState);
 }
